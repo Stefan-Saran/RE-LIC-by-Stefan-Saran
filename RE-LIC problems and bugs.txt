@@ -1,0 +1,11 @@
+back-end:
+- while draging progressbar, the progressbar stops the line generating loop, after the release of dragging, the loop continues
+- when the programm automatically closes and opens up then it should show users input again
+- the invisible text should show again when user clicks somewhere else
+
+front-end(design):
+- the warning and pop-ups should be opened in location where the software is opened, in the center of the location of the software
+- after user clicks somewhere else from the input, then should show again the message
+- (maybe creating it): minimum resize for the software
+- entrys should scale on resize same as other widgets
+-(maybe creating it): all popup backgrounds same color as software background
