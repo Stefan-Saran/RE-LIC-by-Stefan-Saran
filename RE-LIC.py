@@ -41,12 +41,6 @@ def line():
     return Convert_To_Int
 
 
-# def popup_no_code_pattern():
-    #d = len(entry.get())
-    #e = int(len(entry2.get()))
-    # if e and d == 0:
-    # return SystemExit
-
 def generator(entry, popup):
     path_name = "Random codes generated"
     a = """"""
@@ -106,9 +100,12 @@ def createFolder(directory="Pattern and lines(saved data)"):
 
 
 def button_command():
+    app.wm_overrideredirect(True)
     teams = range(line())
     # start progress bar
-    popup = tk.Toplevel(background="#1A1A1A")
+    popup = tk.Toplevel(background="#303030")
+    popup.attributes('-topmost', 'true')
+    popup.wm_overrideredirect(True)
     popup.config(menu="")
     popup.title("Generating...")
     tk.Label(popup, text="Generating, please wait it depends on number of lines...")
