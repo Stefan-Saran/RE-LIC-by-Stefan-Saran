@@ -1,7 +1,3 @@
-back-end:
-problem:
-- while draging progressbar, the progressbar stops the line generating loop, after the release of dragging, the loop continues
-
 front-end(design):
 - (maybe creating it): minimum resize for the software
 - entrys should scale on resize same as other widgets
