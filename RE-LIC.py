@@ -253,25 +253,27 @@ Creation date:
 
 
 def clear_search(event):
-    if len(entry.get()) == 0:
-        pass
-    elif entry.get() == "Enter your code pattern here":
+    if entry.get() == "Enter your code pattern here":
         entry.delete(0, END)
 
 
 def clear_search2(event2):
-    if len(entry2.get()) <= 0:
-        pass
-    elif entry2.get() == "How many lines?":
+    if entry2.get() == "How many lines?":
         entry2.delete(0, END)
 
 
 def add1(asd1):
-    entry.insert(0, "Enter your code pattern here")
+    if len(entry.get()) == 0:
+        entry.insert(0, "Enter your code pattern here")
+    else:
+        pass
 
 
 def add2(asd2):
-    entry2.insert(0, "How many lines?")
+    if len(entry2.get()) == 0:
+        entry2.insert(0, "How many lines?")
+    elif entry2.get() == "How many lines?":
+        entry2.delete(0, END)
 
 
 Canvas = tk.Canvas(height=600, width=1000, bg="#343434")
@@ -281,14 +283,13 @@ Frame = tk.Frame(Canvas, height=600, width=1000, bg="#1A1A1A")
 Frame.pack(fill="both", expand=True)
 
 large_font = ('Verdana', 17)
-entry = tk.Entry(Frame, bg="#F7F5EB", font=large_font, width=25)
+entry = tk.Entry(Frame, state=NORMAL, bg="#F7F5EB",
+                 font=large_font, width=25)
 entry.place(relx=0.5, rely=0.3, anchor="center")
 a = "Enter your code pattern here"
 entry.insert(0, a)
 entry.configure(foreground="gray")
 entry.bind("<Button-1>", clear_search)
-entry.bind("<FocusOut>", add1)
-
 
 entry2 = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 11))
 entry2.place(relx=0.5, rely=0.5, anchor="center")
@@ -296,7 +297,6 @@ b = "How many lines?"
 entry2.insert(0, b)
 entry2.configure(foreground="gray")
 entry2.bind("<Button-1>", clear_search2)
-entry2.bind("<FocusOut>", add2)
 
 generate_button_font = ('Arial', 12)
 Generate_button = tk.Button(
