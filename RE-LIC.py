@@ -215,6 +215,7 @@ def popup_bonus2():
     sh = root.winfo_screenheight()
     x = (sw - w)/2
     y = (sh - h)/2
+    release_date = str("November 10th. 2019 - May 8th. 2020")
     root.geometry('%dx%d+%d+%d' % (w, h, x, y))
     m = f"""
 
@@ -227,14 +228,19 @@ Creator = Stefan Saran
 ---------------------------
 
 ---------------------------
-Creation date started: 
-November 10th. 2019
+Creation date: 
+
 ---------------------------
 """
     m += '\n'
     w = Label(root, text=m, width=120, height=18,
               background="#1A1A1A", foreground="white", font=large_font2)
     w.pack()
+
+    release_date2 = tk.Label(w, text=release_date,
+                             background="#1A1A1A", foreground="white")
+    release_date2.place(rely=0.92, relx=0.5, anchor="center")
+    release_date2["font"] = 10
 
     root.transient(app)
     root.grab_set()
