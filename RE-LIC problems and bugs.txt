@@ -1,3 +1,0 @@
-front-end(design):
-- minimum resize for the software
-- entrys should scale on resize same as other widgets
