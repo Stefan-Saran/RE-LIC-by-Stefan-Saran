@@ -42,7 +42,7 @@ def line():
 
 
 def generator(entry, popup):
-    path_name = "Random codes generated"
+    path_name = "Random lines generated"
     a = """"""
     c = 0
     d = len(entry.get())
@@ -50,7 +50,6 @@ def generator(entry, popup):
     f = 0
     if not os.path.exists(path_name):
         os.makedirs(path_name)
-    else:
         completeName2 = os.path.join(path_name, filename+".txt")
         completeName2 = open(completeName2, "w")
         for i in range(line()):
@@ -89,7 +88,6 @@ def createFolder(directory="Pattern and lines(saved data)"):
     try:
         if not os.path.exists(directory):
             os.makedirs(directory)
-        else:
             completeName = os.path.join(
                 directory, filename+"(Pattern and Lines)"+".txt")
             directory1 = open(completeName, "w")
@@ -197,8 +195,10 @@ def popup_bonus():
     root.transient(app)
     root.grab_set()
     root.wait_window(root)
-
-    root.resizable(False, False)
+    try:
+        root.resizable(False, False)
+    except TclError:
+        pass
     root.mainloop()
 
 
@@ -239,13 +239,15 @@ November 10th. 2019
     root.transient(app)
     root.grab_set()
     root.wait_window(root)
-
-    root.resizable(False, False)
+    try:
+        root.resizable(False, False)
+    except TclError:
+        pass
     root.mainloop()
 
 
 def clear_search(event):
-    if len(entry.get()) <= 0:
+    if len(entry.get()) == 0:
         pass
     elif entry.get() == "Enter your code pattern here":
         entry.delete(0, END)
@@ -258,6 +260,14 @@ def clear_search2(event2):
         entry2.delete(0, END)
 
 
+def add1(asd1):
+    entry.insert(0, "Enter your code pattern here")
+
+
+def add2(asd2):
+    entry2.insert(0, "How many lines?")
+
+
 Canvas = tk.Canvas(height=600, width=1000, bg="#343434")
 Canvas.pack(fill="both", expand=True)
 
@@ -266,28 +276,25 @@ Frame.pack(fill="both", expand=True)
 
 large_font = ('Verdana', 17)
 entry = tk.Entry(Frame, bg="#F7F5EB", font=large_font, width=25)
-entry.place(rely=0.3, relx=0.17)
+entry.place(relx=0.5, rely=0.3, anchor="center")
 a = "Enter your code pattern here"
 entry.insert(0, a)
 entry.configure(foreground="gray")
 entry.bind("<Button-1>", clear_search)
+entry.bind("<FocusOut>", add1)
 
-# while len(entry.get()) < 0:
-#entry.insert(0, "Enter your code pattern here")
-# while len(entry) > 0:
-#entry.delete(0, "end")
 
 entry2 = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 11))
-entry2.pack(expand=True)
+entry2.place(relx=0.5, rely=0.5, anchor="center")
 b = "How many lines?"
 entry2.insert(0, b)
 entry2.configure(foreground="gray")
 entry2.bind("<Button-1>", clear_search2)
+entry2.bind("<FocusOut>", add2)
 
 generate_button_font = ('Arial', 12)
 Generate_button = tk.Button(
     Frame, bg="#f0f0f0", font=generate_button_font, foreground="#525252", command=lambda: warning())
-Generate_button.pack()
 Generate_button.place(rely=0.7, relx=0.35, relwidth=0.31, relheight=0.12)
 Generate_button.config(text="Generate")
 
@@ -304,5 +311,6 @@ about_button.place(rely=0.03, relx=0.02, relwidth=0.1, relheight=0.075)
 about_button.config(text="About")
 
 center_window(600, 350)
+app.minsize(390, 200)
 
 app.mainloop()
