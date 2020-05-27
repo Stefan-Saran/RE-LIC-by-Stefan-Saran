@@ -12,6 +12,6 @@ There are no special modules that uses this qui, so you just need python to run 
 
 The way this project works is very simple, it uses your text and the number of how many lines you want and checks for special characters you used, if there are any then it replaces it with 
 new letter or number, it depends which special characters you used, for that you need to click the button "Help". After the lines are generated then it writes the lines in a text file.
-the text file name will be name after the curent date and time.
+the text file name will be named after the curent date and time.
 
 Feel free to download.
