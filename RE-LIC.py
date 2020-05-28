@@ -41,6 +41,29 @@ def line():
     return Convert_To_Int
 
 
+def returns(popup):
+    path_name = "Random lines generated"
+    a = """"""
+    c = 0
+    d = len(entry.get())
+    e = int(len(entry2.get()))
+    f = 0
+    completeName2 = os.path.join(path_name, filename+".txt")
+    completeName2 = open(completeName2, "w")
+    for i in range(line()):
+        for number in entry.get():
+            if number == "+"or "*"or "!":
+                letter = random.choice('abcdefghijklmnopqrstuvwxyz')
+                letter2 = random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+                number = number.replace("*", str(randrange(10)))
+                number2 = (number.replace("+", letter))
+                number3 = (number2.replace("!", letter2))
+                a = a + (str(number3))
+        popup.title("Writing lines...")
+    completeName2.write('\n'.join(textwrap.wrap(a, d)))
+    completeName2.close()
+
+
 def generator(entry, popup):
     path_name = "Random lines generated"
     a = """"""
@@ -50,6 +73,8 @@ def generator(entry, popup):
     f = 0
     if not os.path.exists(path_name):
         os.makedirs(path_name)
+        returns(popup)
+    else:
         completeName2 = os.path.join(path_name, filename+".txt")
         completeName2 = open(completeName2, "w")
         for i in range(line()):
@@ -93,12 +118,17 @@ def createFolder(directory="Pattern and lines(saved data)"):
             directory1 = open(completeName, "w")
             directory1.write(str(q+c))
             directory1.close()
+        else:
+            completeName = os.path.join(
+                directory, filename+"(Pattern and Lines)"+".txt")
+            directory1 = open(completeName, "w")
+            directory1.write(str(q+c))
+            directory1.close()
     except OSError:
         messagebox.showerror("Error", "Creating directory" + directory)
 
 
 def button_command():
-    app.wm_overrideredirect(True)
     teams = range(line())
     # start progress bar
     popup = tk.Toplevel(background="#303030")
@@ -136,6 +166,7 @@ def button_command():
 
 
 def test():
+    app.withdraw()
     if not entry2.get().isdigit():
         showinfo("Error", "line box should only contain numbers!")
     else:
@@ -185,7 +216,6 @@ def popup_bonus():
 * = random number
 + = random lowercase letter
 ! = random uppercase letter
-
     """
     m += '\n'
     w = Label(root, text=m, width=120, height=10,
@@ -218,18 +248,14 @@ def popup_bonus2():
     release_date = str("November 10th. 2019 - May 8th. 2020")
     root.geometry('%dx%d+%d+%d' % (w, h, x, y))
     m = f"""
-
-
 |{a}|
 ---------------------------
 \nThis program uses characters to \ngenerate new lines with random\n letters and numbers.\nCertain letters\n can also be specified\n
 ---------------------------
 Creator = Stefan Saran
 ---------------------------
-
 ---------------------------
 Creation date: 
-
 ---------------------------
 """
     m += '\n'
@@ -318,5 +344,6 @@ about_button.config(text="About")
 
 center_window(600, 350)
 app.minsize(390, 200)
+app.geometry("500x300")
 
 app.mainloop()
