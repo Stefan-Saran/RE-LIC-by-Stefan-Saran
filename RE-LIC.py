@@ -1,27 +1,39 @@
-from pip._vendor.progress.bar import PixelBar
-from pip._vendor.progress.bar import Bar
-from tkinter.messagebox import showinfo
-from datetime import datetime
-import tkinter.font as tkFont
-from random import randrange
-from datetime import date
-from tkinter import ttk
-from time import sleep
-from tkinter import *
-import tkinter as tk
-import subprocess
-import traceback
-import textwrap
-import pickle
-import random
-import time
-import sys
-import os
-import tkinter.simpledialog
-import tkinter.simpledialog as simpledialog
-from tkinter import messagebox
-from tkinter import colorchooser
-import progressbar
+modules = ["progressbar"]
+
+try:
+    from tkinter.messagebox import showinfo
+    from datetime import datetime
+    from random import randrange
+    from datetime import date
+    from tkinter import ttk
+    from time import sleep
+    from tkinter import *
+    import tkinter as tk
+    import subprocess
+    import traceback
+    import textwrap
+    import random
+    import time
+    import sys
+    import os
+    import tkinter.simpledialog
+    from tkinter import messagebox
+    import progressbar
+except ImportError:
+    import sys
+    import pip
+    import subprocess
+    module_installation_question = input(
+        "Some modules are missing, do you want to install all required modules for this project? yes or no.: ").lower()
+    if module_installation_question == "yes":
+        for module in modules:
+            subprocess.call(['pip', 'install', module])
+        print("Restart the editor and this project should work...")
+        sys.exit()
+    elif module_installation_question == "no":
+        print("This project won't work if one module is missing...")
+        sys.exit()
+
 
 Lines_Generator = tk.Tk()
 
