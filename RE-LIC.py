@@ -1,4 +1,4 @@
-modules = ["progressbar"]
+modules = ["progressbar", "winshell"]
 
 try:
     from tkinter.messagebox import showinfo
@@ -19,6 +19,7 @@ try:
     import tkinter.simpledialog
     from tkinter import messagebox
     import progressbar
+    import winshell
 except ImportError:
     import sys
     import pip
@@ -45,6 +46,17 @@ date_and_time_now = datetime.now()
 date_format = date_and_time_now.strftime("%d.%m.%Y - %H.%M.%S")
 
 filename = date_format + str(".txt")
+saved_data_textfile_name = "Saved data from RE-LIC.txt"
+
+Canvas = tk.Canvas(height=600, width=1000, bg="#343434")
+
+Frame = tk.Frame(Canvas, height=600, width=1000, bg="#1A1A1A")
+
+pattern_box = tk.Entry(Frame, bg="#F7F5EB",
+                       font=('Verdana', 17), width=25)
+
+
+lines_box = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 11))
 
 
 def string_to_integer():
@@ -188,18 +200,28 @@ def disabling_and_warning():
         showinfo("Error", "line box should only contain numbers!")
     else:
         Lines_generating_time()
+        data_from_user()
+
+
+def data_from_user():
+    pattern_box_get = pattern_box.get()
+    lines_box_get = lines_box.get()
+    saved_data_text = f"{pattern_box_get}\n{lines_box_get}"
+    saved_data = open(saved_data_textfile_name, "w+")
+    saved_data.seek(0)
+    saved_data.truncate(0)
+    saved_data.write(saved_data_text)
+    saved_data.close()
 
 
 def warning():
     a = len(pattern_box.get())
     b = len(lines_box.get())
-    c = "Enter your code pattern here"
-    d = "How many lines?"
-    if pattern_box.get() == c and lines_box.get() == d or a == 0 and b == 0 or a == 0 and lines_box.get() == d or b == 0 and pattern_box.get() == c:
+    if pattern_box.get() == entry1_text and lines_box.get() == lines_box_text or a == 0 and b == 0 or a == 0 and lines_box.get() == lines_box_text or b == 0 and pattern_box.get() == entry1_text:
         messagebox.showerror("Error", "The boxes cannot be blank!")
-    elif lines_box.get() == d and a >= 0 or a >= 0 and b == 0:
+    elif lines_box.get() == lines_box_text and a >= 0 or a >= 0 and b == 0:
         messagebox.showerror("Error", "Line Box cannot be blank!")
-    elif pattern_box.get() == c and b >= 0 or b >= 0 and a == 0:
+    elif pattern_box.get() == entry1_text and b >= 0 or b >= 0 and a == 0:
         messagebox.showerror("Error", "Pattern Box cannot be blank!")
     elif string_to_integer() > 10000:
         messagebox.showinfo("Error", "The maximum number of lines is 10.000!")
@@ -222,8 +244,8 @@ def Help_window():
     help = Toplevel(background="#1A1A1A")
     large_font2 = ('Verdana', 14)
     help.title("Commands")
-    width = 300     # popup window width
-    height = 400     # popup window height
+    width = 300
+    height = 400
     screenwidth = help.winfo_screenwidth()
     screenheight = help.winfo_screenheight()
     x = (screenwidth - width)/2
@@ -296,14 +318,14 @@ Creation date:
 
 
 def clearn_code_pattern(event):
-    if pattern_box.get() == "Enter your code pattern here":
+    if pattern_box.get() == entry1_text:
         pattern_box.delete(0, END)
     else:
         pass
 
 
 def clear_lines_box(event2):
-    if lines_box.get() == "How many lines?":
+    if lines_box.get() == lines_box_text:
         lines_box.delete(0, END)
     else:
         pass
@@ -333,21 +355,27 @@ def insert_entry2_text(asd2):
         pass
 
 
-pattern_box_font = ('Verdana', 17)
+def saved_data_from_relic():
+    if os.path.exists(saved_data_textfile_name):
+        f = open(saved_data_textfile_name)
+        lines = f.read().splitlines()
+        try:
+            asd = lines[0]
+            asd1 = lines[1]
+            pattern_box.delete(0, END)
+            lines_box.delete(0, END)
+            pattern_box.insert(0, asd)
+            lines_box.insert(0, asd1)
+            f.close()
+        except:
+            tk.messagebox.showerror("Error", "Something went wrong...")
+
+
+saved_data_from_relic()
 generate_button_font = ('Arial', 12)
 help_button_font = ("Arial", 10)
 about_button_font = ("Arial", 10)
 
-
-Canvas = tk.Canvas(height=600, width=1000, bg="#343434")
-
-Frame = tk.Frame(Canvas, height=600, width=1000, bg="#1A1A1A")
-
-pattern_box = tk.Entry(Frame, state=NORMAL, bg="#F7F5EB",
-                       font=pattern_box_font, width=25)
-
-
-lines_box = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 11))
 
 Generate_button = tk.Button(
     Frame, bg="#f0f0f0", font=generate_button_font, foreground="#525252", command=lambda: warning())
@@ -362,8 +390,11 @@ about_button = tk.Button(Frame, bg="#F7F5EB", font=help_button_font,
 
 entry1_text = "Enter your code pattern here"
 lines_box_text = "How many lines?"
-lines_box.insert(0, lines_box_text)
-pattern_box.insert(0, entry1_text)
+if len(lines_box.get()) == 0 and len(pattern_box.get()) == 0:
+    lines_box.insert(0, lines_box_text)
+    pattern_box.insert(0, entry1_text)
+else:
+    pass
 
 Canvas.pack(fill="both", expand=True)
 Frame.pack(fill="both", expand=True)
