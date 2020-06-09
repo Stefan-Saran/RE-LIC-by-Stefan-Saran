@@ -56,7 +56,7 @@ pattern_box = tk.Entry(Frame, bg="#F7F5EB",
                        font=('Verdana', 17), width=25)
 
 
-lines_box = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 11))
+lines_box = tk.Entry(Frame, bg="#F7F5EB", width=22, font=("Verdana", 13))
 
 
 def string_to_integer():
@@ -320,6 +320,9 @@ Creation date:
 def clearn_code_pattern(event):
     if pattern_box.get() == entry1_text:
         pattern_box.delete(0, END)
+        pattern_box.configure(foreground="black")
+    elif len(pattern_box.get()) != entry1_text:
+        pattern_box.configure(foreground="black")
     else:
         pass
 
@@ -327,38 +330,38 @@ def clearn_code_pattern(event):
 def clear_lines_box(event2):
     if lines_box.get() == lines_box_text:
         lines_box.delete(0, END)
+        lines_box.configure(foreground="black")
     else:
         pass
+
+
+entry1_text = "Enter your code pattern here"
+lines_box_text = "How many lines?"
 
 
 def text_effect(asd1):
     if len(pattern_box.get()) == 0 and len(lines_box.get()) == 0:
         pattern_box.insert(0, "Enter your code pattern here")
         lines_box.insert(0, "How many lines?")
+        pattern_box.configure(foreground="gray")
+        lines_box.configure(foreground="gray")
         Lines_Generator.focus()
     elif len(pattern_box.get()) == 0:
         pattern_box.insert(0, "Enter your code pattern here")
+        pattern_box.configure(foreground="gray")
         Lines_Generator.focus()
     elif len(lines_box.get()) == 0:
         lines_box.insert(0, "How many lines?")
+        lines_box.configure(foreground="gray")
         Lines_Generator.focus()
-    else:
-        pass
-
-
-def insert_entry2_text(asd2):
-    if len(lines_box.get()) == 0:
-        lines_box.insert(0, "How many lines?")
-    elif lines_box.get() == "How many lines?":
-        lines_box.delete(0, END)
     else:
         pass
 
 
 def saved_data_from_relic():
     if os.path.exists(saved_data_textfile_name):
-        f = open(saved_data_textfile_name)
-        lines = f.read().splitlines()
+        open_textfile = open(saved_data_textfile_name)
+        lines = open_textfile.read().splitlines()
         try:
             asd = lines[0]
             asd1 = lines[1]
@@ -366,7 +369,7 @@ def saved_data_from_relic():
             lines_box.delete(0, END)
             pattern_box.insert(0, asd)
             lines_box.insert(0, asd1)
-            f.close()
+            open_textfile.close()
         except:
             tk.messagebox.showerror("Error", "Something went wrong...")
 
@@ -378,21 +381,21 @@ about_button_font = ("Arial", 10)
 
 
 Generate_button = tk.Button(
-    Frame, bg="#f0f0f0", font=generate_button_font, foreground="#525252", command=lambda: warning())
+    Frame, bg="#f0f0f0", font=generate_button_font, foreground="#2b2b2b", command=lambda: warning())
 
 
 help_button = tk.Button(Frame, bg="#F7F5EB", font=help_button_font,
-                        foreground="#525252", command=Help_window)
+                        foreground="#2b2b2b", command=Help_window)
 
 
 about_button = tk.Button(Frame, bg="#F7F5EB", font=help_button_font,
-                         foreground="#525252", command=About_window)
+                         foreground="#2b2b2b", command=About_window)
 
-entry1_text = "Enter your code pattern here"
-lines_box_text = "How many lines?"
 if len(lines_box.get()) == 0 and len(pattern_box.get()) == 0:
     lines_box.insert(0, lines_box_text)
     pattern_box.insert(0, entry1_text)
+    pattern_box.configure(foreground="gray")
+    lines_box.configure(foreground="gray")
 else:
     pass
 
@@ -404,8 +407,7 @@ Generate_button.place(rely=0.7, relx=0.35, relwidth=0.31, relheight=0.12)
 help_button.place(rely=0.03, relx=0.88, relwidth=0.1, relheight=0.075)
 about_button.place(rely=0.03, relx=0.02, relwidth=0.1, relheight=0.075)
 
-pattern_box.configure(foreground="gray")
-lines_box.configure(foreground="gray")
+
 Generate_button.config(text="Generate")
 help_button.config(text="Help")
 about_button.config(text="About")
@@ -420,5 +422,10 @@ about_button.bind("<Button-1>", text_effect)
 Frame.bind("<Button-1>", text_effect)
 pattern_box.bind("<Button-1>", clearn_code_pattern)
 lines_box.bind("<Button-1>", clear_lines_box)
+
+if pattern_box.get() == entry1_text:
+    pattern_box.configure(foreground="gray")
+else:
+    pattern_box.configure(foreground="black")
 
 Lines_Generator.mainloop()
